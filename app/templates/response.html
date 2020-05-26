@@ -8,10 +8,16 @@
 </head>
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-lg-1 col-centered centered_block">
+        <h2>This is your new url</h2>
+        <div class="row centered_block">
+            <div class="col-lg col-centered">
                 <div>
-                    <span>{{short_link}}</span>
+                    <div>
+                        <input id="link" value="{{short_link}}" readonly>
+                    </div>
+                    <div>
+                        <button id="copy_link" class="btn btn-dark">Copy link</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,13 +27,29 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <style>
+h2{
+    text-align: center;
+}
 .centered_block{
-    margin: 0 auto;
-    margin-top: 25%;
+    text-align: center;
+    margin-top: 150px;
 }
 .input_text{
     font-size: 32px;
 }
+div{
+    margin-top: 15px;;
+}
 </style>
+<script>
+    let copyLink =document.getElementById("copy_link");
+    copyLink.addEventListener("click", function(){
+        let link = document.getElementById("link");
+        link.select();
+        link.setSelectionRange(0, 99999)
+        document.execCommand("copy")
+        alert("Copied the link " + link.value);
+    })
+</script>
 </body>
 </html>

@@ -2,7 +2,7 @@ from aiohttp import web
 import aiohttp_jinja2
 import jinja2
 
-from utils import transform, select_db
+from utils import transform, select_db, custom_encode
 
 routes = web.RouteTableDef()                                           
 
@@ -16,8 +16,11 @@ class mainView(web.View):
 
     async def post(self):
         data = await self.request.post()
-        short_link = await transform(data['url_input'])
-        context = {'short_link':short_link}
+        if data['custom_input'] !='':
+            short_link = await custom_encode(data)
+        else:
+            short_link = await transform(data['url_input'])
+        context = {'short_link':short_link if short_link else 'This url has already taken'}
         response = aiohttp_jinja2.render_template(  'response.html',
                                                     self.request,
                                                     context)
@@ -27,7 +30,7 @@ class mainView(web.View):
 class redirectView(web.View):
     async def get(self):
         short_url = 'http://short/red/'+self.request.match_info['link']
-        urls = await select_db(short_url, 'short_url')
+        urls = await select_db(short_url, 'short_url', '%')
         if urls:
             raise web.HTTPFound(urls[0])
         else:
