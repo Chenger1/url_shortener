@@ -36,3 +36,4 @@ async def test_custom_encode(cli):
     assert cli.server.app['url_input'] == 'Another_URL'
     assert cli.server.app['custom_input'] == 'somePage'
     assert await resp.text() == 'http://short/red/somePage'
+    assert rest.status == 400
