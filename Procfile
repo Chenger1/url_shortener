@@ -1,1 +1,1 @@
-web: gunicorn --bind 0.0.0.0:$PORT -k aiohttp.worker.GunicornWebWorker myapp:create_app
+web: gunicorn --bind 0.0.0.0:$PORT -k aiohttp.worker.GunicornWebWorker url-shorti:create_app
